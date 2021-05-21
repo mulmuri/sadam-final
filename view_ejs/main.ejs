@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>사담과 함께 만들어갈, "사교인의 이야기"</title>
+  <style> @import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
+  * {
+    font-family: 'Yeon Sung';
+    /*font-size: 1rem;*/
+    color: white;
+  }
+  </style>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    background-color: black;
+    position: relative;
+  }
+
+  #main-board {
+    width: 100%;
+    height: auto;
+
+    margin: 0 auto;
+    background: url('stampBoard.jpg') no-repeat 0 0;
+    background-color: black;
+    background-size: 100%;
+
+    position:relative;
+  }
+  #main-board:before {
+    content:"";
+    display:block;
+    padding-top: 141%;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+
+    position: absolute;
+    left: 9.5%;
+    width: 83%;
+    top: 38%;
+    height: 44%;
+  }
+
+  .stamp {
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+  }
+  .show {
+    visibility: visible;
+  }
+  #plate {
+    position:absolute;
+    left: 20%;
+    top: 28.6%;
+    font-size: 2.5vw;
+    line-height: 110%;
+  }
+
+
+  </style>
+</head>
+<body>
+  <div id="main-board">
+    <div class="grid-container">
+      <div class="grid-item"><img src="stampNo0.png" class="stamp <% if (status[0] == true) { %>show<% } %>"></div>
+      <div class="grid-item"><img src="stampNo1.png" class="stamp <% if (status[1] == true) { %>show<% } %>"></div>
+      <div class="grid-item"><img src="stampNo2.png" class="stamp <% if (status[2] == true) { %>show<% } %>"></div>
+      <div class="grid-item"><img src="stampNo3.png" class="stamp <% if (status[3] == true) { %>show<% } %>"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item"><img src="stampNo4.png" class="stamp <% if (status[4] == true) { %>show<% } %>"></div>
+      <div class="grid-item"><img src="stampNo5.png" class="stamp <% if (status[5] == true) { %>show<% } %>"></div>
+      <div class="grid-item"><img src="stampNo6.png" class="stamp <% if (status[6] == true) { %>show<% } %>"></div>
+      <div class="grid-item"><img src="stampNo7.png" class="stamp <% if (status[7] == true) { %>show<% } %>"></div>
+    </div>
+    <div id=plate><%=ID%><br><%=name%></div>
+  </div>
+</body>
+</html>

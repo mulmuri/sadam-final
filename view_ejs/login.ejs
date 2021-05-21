@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>사담과 함께 만들어갈, "사교인의 이야기"</title>
+  <style> @import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
+  * {
+    font-family: 'Yeon Sung';
+    font-size: 1rem;
+  }
+  </style>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    background-color: black;
+  }
+
+  #mainBoard {
+    width: 100%;
+    height: auto;
+
+    margin: 0 auto;
+    background: url('stampBoard.jpg') no-repeat 0 0;
+    background-color: black;
+    background-size: 100%;
+  }
+  #mainBoard:before {
+    content: "";
+    display:block;
+    padding-top: 141%;
+  }
+
+  </style>
+</head>
+<body>
+  <div id="mainBoard">
+    <button type="button" id="registration-button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display: none"></button>
+
+    <form id="loginField" name="loginField" method="post" action="/user_info" onsubmit="return checkForm()">
+      <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">사용자 등록</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="form-floating mb-3">
+                <input type="text" name="ID" id="ID" class="form-control" id="floatingID" placeholder="00000000">
+                <label for="floatingID">학번</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" name="name" id="name"  class="form-control" id="floatingName" placeholder="이름">
+                <label for="floatingID">이름</label>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+              <button type="submit" class="btn btn-dark" name="test" >등록</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+  <script>
+  var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+  setTimeout(function() {
+    myModal.toggle();
+  }, 500)
+
+  function checkForm() {
+    var name = document.loginField.name.value;
+    if (name == '' || !(2 <= name.length && name.length <= 4) || !isNaN(name) || name.includes('\n')) {
+      window.alert("이름을 정확히 입력해주세요.");
+      return false;
+    }
+
+    var ID = document.loginField.ID.value;
+    if (ID == '' || ID.length != 8 || isNaN(ID)) {
+      window.alert("학번을 정확히 입력해주세요.");
+      return false;
+    }
+  }
+  </script>
+</body>
+</html>

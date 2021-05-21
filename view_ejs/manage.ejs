@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>사담과 함께 만들어갈, "사교인의 이야기"</title>
+
+  <style> @import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
+  * {
+    font-family: 'Yeon Sung';
+    font-size: 1rem;
+    color: white;
+    font-weight: normal;
+  }
+  <style>
+  body {
+    margin: 0 auto;
+  }
+
+  .container {
+    padding: 0;
+  }
+  .container .table-responsive .table {
+    width: auto;
+    margin: 0 auto;
+  }
+
+  table {
+    min-width: 640px;
+    max-width: 640px;
+  }
+
+  th {
+    height: 40px;
+    text-align: center;
+  }
+  .th-1 {
+    width: 40px;
+  }
+  .th-2 {
+    width: 120px;
+  }
+  .th-3 {
+    width: 120px;
+  }
+  .th-4 {
+    width: 40px;
+    padding: 0 !important;
+  }
+  .th-5 {
+    width: 40px;
+  }
+
+  .stamp {
+    width: 100%;
+    height: 100%;
+  }
+  </style>
+</head>
+<body class="bg-dark">
+  <div class="container">
+    <div class="table-responsive">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th class="th-1">#</th>
+            <th class="th-2">이름</th>
+            <th class="th-3">학번</th>
+            <% for (var j=0; j<=7; j++) { %>
+              <th class="th-4"><img src="stampNo<%=j%>.png" class="stamp"></th>
+            <% } %>
+            <th class="th-5"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (var i=0; i<=list.length-1; i++) { %>
+            <tr id="<%=list[i].name%>">
+              <th class="th-1"><%=i+1 %></th>
+              <th class="th-2"><%=list[i].name %></th>
+              <th class="th-3"><%=list[i].ID %></th>
+              <% for (var j=0; j<=7; j++) { %>
+                <th class="th-4" onclick="sendModifyAjax('<%=list[i].name%>', <%=j%>)">
+                  <img src="stampNo<%=j%>.png"
+                  class="stamp <%=list[i].name%> <%=j%>"
+                  style="visibility: <% if (list[i].status[j] == true) { %>visible<% } else { %>hidden<% } %>">
+                </th>
+              <% } %>
+              <th class="th-5" onclick="sendDeleteAjax('<%=list[i].name%>')">X</th>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    function sendModifyAjax(name, idx) {
+        var bool = (document.getElementsByClassName(name)[idx].style.visibility == "hidden");
+        var data = {'name': name, 'idx': idx, 'bool': bool, 'authorityVerdict': true};
+        data = JSON.stringify(data);
+
+        var url = 'modify_user';
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url);
+        xhr.setRequestHeader('Content-type', "application/json");
+        xhr.send(data);
+
+        xhr.addEventListener('load', function() {
+            var res = JSON.parse(xhr.responseText);
+            if (res.authorityVerdict == true)
+                document.getElementsByClassName(res.name)[res.idx].style.visibility = (res.bool) ? "visible":"hidden";
+        });
+    }
+
+    function sendDeleteAjax(name) {
+        var data = {'name': name, 'authorityVerdict': true};
+        data = JSON.stringify(data);
+
+        var url = 'delete_user';
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url);
+        xhr.setRequestHeader('Content-type', "application/json");
+        xhr.send(data);
+
+        xhr.addEventListener('load', function() {
+            var res = JSON.parse(xhr.responseText);
+            if (res.authorityVerdict == true) {
+                var target = document.getElementById(res.name);
+                document.getElementsByTagName('tbody')[0].removeChild(target);
+            }
+        });
+    }
+  </script>
+</body>
+</html>
